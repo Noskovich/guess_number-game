@@ -16,35 +16,43 @@ document.querySelector(".check").addEventListener("click", function () {
     //если мы угадали
   } else if (guess === targetNumber) {
     displayMessage("Вы угадали!");
-    document.querySelector("body").style.background = "green";
+    document.body.classList.add("guess-win");
     document.querySelector(".number").textContent = guess;
     if (score > highScore) {
       document.querySelector(".highscore").textContent = score;
     }
     //если мы не угадали
   } else if (guess !== targetNumber) {
-    if (score > 0) {
+    if (score > 1) {
       if (guess < targetNumber) {
+        score--;
+        document.querySelector(".score").textContent = score;
         displayMessage("Искомое число больше");
-        score--;
-        document.querySelector(".score").textContent = score;
       } else if (guess > targetNumber) {
-        displayMessage("Искомое число меньше");
         score--;
         document.querySelector(".score").textContent = score;
+        displayMessage("Искомое число меньше");
       }
-    } else if (score == 0) {
+    } else {
       displayMessage("Вы проиграли");
+      document.querySelector("h1").textContent = "Загаданное число";
+      document.body.classList.add("guess-lose");
+      document.querySelector(".number").classList.add("number-lose");
+      document.querySelector(".score").textContent = 0;
+      document.querySelector(".number").textContent = targetNumber;
     }
   }
 });
 
 //начинаем новую игру
 document.querySelector(".again").addEventListener("click", function () {
-  document.querySelector("body").style.background = "black";
+  document.body.classList.remove("guess-win");
+  document.body.classList.remove("guess-lose");
+  document.querySelector(".number").classList.remove("number-lose");
+  document.querySelector("h1").textContent = "Угадайте число";
   targetNumber = Math.trunc(Math.random() * 20) + 1;
   console.log(targetNumber);
-  displayMessage("Начните угадывать");
+  displayMessage("Введите число");
   document.querySelector(".score").textContent = 20;
   document.querySelector(".number").textContent = "?";
   document.querySelector(".guess").value = "";
