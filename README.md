@@ -1,1 +1,1 @@
-It's an easy guess number game
+It's a simple "Guess the number" game
